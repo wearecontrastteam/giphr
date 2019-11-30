@@ -2,6 +2,19 @@
 
 @section('content')
 <div class="container">
+
+    <div class="row justify-content-center" style="margin-bottom:4em">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">{{ __('Social Login') }}</div>
+
+                <div class="card-body text-center">
+                    <a href="{{ url('/login/twitter') }}" class="btn btn-primary btn-twitter" class="btn btn-twitter"><i class="fa fa-twitter"></i> Login instantly with Twitter</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">

@@ -20,3 +20,9 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/post', 'HomeController@post')->name('post');
 Route::post('/like/{giph}', 'HomeController@like')->name('like');
+
+// Socialite (social login)
+
+Route::get('login/{provider}', 'Auth\LoginController@redirectToProvider');
+//Route::get('login/{provider}/callback','Auth\LoginController@handleProviderCallback');
+Route::get('auth/{provider}/callback','Auth\LoginController@handleProviderCallback');
