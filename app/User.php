@@ -34,8 +34,8 @@ use Illuminate\Notifications\Notifiable;
  * @property string $avatar_giphy_id
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Like[] $likes
  * @property-read int|null $likes_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Post[] $posts
- * @property-read int|null $posts_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Giph[] $giphs
+ * @property-read int|null $giphs_count
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereAvatarGiphyId($value)
  */
 class User extends Authenticatable
@@ -69,9 +69,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function posts()
+    public function giphs()
     {
-        return $this->hasMany(Post::class);
+        return $this->hasMany(Giph::class);
     }
 
     public function likes()
