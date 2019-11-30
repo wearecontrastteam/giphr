@@ -1886,7 +1886,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     profileUrl: function profileUrl() {
-      return 'https://i.giphy.com/media/' + this.giph.user.giphy_id + '/giphy.webp';
+      return 'https://i.giphy.com/media/' + this.giph.user.avatar_giphy_id + '/giphy.webp';
     },
     giphUrl: function giphUrl() {
       return 'https://i.giphy.com/media/' + this.giph.giphy_id + '/giphy.webp';
@@ -2015,14 +2015,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "new-giph",
-  props: [],
+  props: ['avatarGiphyId'],
   data: function data() {
     return {
       saving: false,
       giphy_id: ''
     };
   },
-  computed: {},
+  computed: {
+    profileUrl: function profileUrl() {
+      return 'https://i.giphy.com/media/' + this.avatarGiphyId + '/giphy.webp';
+    }
+  },
   methods: {
     createGiph: function createGiph() {
       var _this = this;
@@ -19834,7 +19838,14 @@ var render = function() {
       _c("div", { staticClass: "card" }, [
         _c("div", { staticClass: "card-body" }, [
           _c("div", { staticClass: "input-group" }, [
-            _vm._m(0),
+            _c("div", { staticClass: "input-group-prepend mr-4" }, [
+              _c("span", { staticClass: "input-group-img" }, [
+                _c("img", {
+                  staticClass: "rounded-circle profile",
+                  attrs: { src: _vm.profileUrl }
+                })
+              ])
+            ]),
             _vm._v(" "),
             _c("input", {
               directives: [
@@ -19879,21 +19890,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "input-group-prepend mr-4" }, [
-      _c("span", { staticClass: "input-group-img" }, [
-        _c("img", {
-          staticClass: "rounded-circle profile",
-          attrs: { src: "https://i.giphy.com/media/YsTs5ltWtEhnq/giphy.webp" }
-        })
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

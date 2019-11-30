@@ -25,7 +25,7 @@
         },
         computed: {
             profileUrl(){
-                return 'https://i.giphy.com/media/'+this.giph.user.giphy_id+'/giphy.webp';
+                return 'https://i.giphy.com/media/'+this.giph.user.avatar_giphy_id+'/giphy.webp';
             },
             giphUrl(){
                 return 'https://i.giphy.com/media/'+this.giph.giphy_id+'/giphy.webp';

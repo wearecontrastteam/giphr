@@ -6,7 +6,7 @@
                     <div class="input-group">
                         <div class="input-group-prepend mr-4">
                             <span class="input-group-img">
-                                <img src="https://i.giphy.com/media/YsTs5ltWtEhnq/giphy.webp" class="rounded-circle profile">
+                                <img :src="profileUrl" class="rounded-circle profile">
                             </span>
                         </div>
                         <input type="text" class="form-control" placeholder="What's Giphening?" v-model="giphy_id">
@@ -23,14 +23,18 @@
 <script>
     export default {
         name: "new-giph",
-        props: [],
+        props: ['avatarGiphyId'],
         data() {
             return {
                 saving: false,
                 giphy_id: '',
             };
         },
-        computed: {},
+        computed: {
+            profileUrl(){
+                return 'https://i.giphy.com/media/'+this.avatarGiphyId+'/giphy.webp';
+            }
+        },
         methods: {
             createGiph(){
                 this.saving = true;

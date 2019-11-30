@@ -5,7 +5,7 @@
     <div class="row">
         @include('partials.nav')
         <div class="col-md-9">
-            <new-giph></new-giph>
+            <new-giph avatar-giphy-id="{{ auth()->user()->avatar_giphy_id }}"></new-giph>
             <giph-timeline></giph-timeline>
         </div>
     </div>
