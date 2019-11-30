@@ -18,5 +18,5 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::post('/post', 'HomeController@post')->name('post');
-Route::post('/like/{giph}', 'HomeController@like')->name('like');
+Route::get('/privacy', 'LegalController@privacy')->name('privacy');
+Route::get('/terms', 'LegalController@terms')->name('terms');
