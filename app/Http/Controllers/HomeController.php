@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Post;
+use App\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +25,22 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $posts = Post::with('user')->get();
+        $users = User::all();
+
+        return view('home', [
+            'users' => $users,
+            'posts' => $posts,
+        ]);
+    }
+
+    public function post(Request $request)
+    {
+        $user = auth()->user();
+        $user->posts()->create([
+            'giphy_id' => $request->get('giphy_id'),
+        ]);
+
+        return "OK";
     }
 }
