@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Giph;
 use App\User;
+use Auth;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -32,6 +33,24 @@ class HomeController extends Controller
             'users' => $users,
             'giphs' => $giphs,
         ]);
+    }
+
+
+    public function profile()
+    {
+        return view('profile', [
+            'user' => Auth::user(),
+        ]);
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $user = Auth::user();
+
+        $user->avatar_giphy_id = $request->get('avatar_giphy_id');
+        $user->save();
+
+        return redirect(route('profile'));
     }
 
     // TODO REMOVE
