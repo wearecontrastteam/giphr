@@ -41,9 +41,21 @@
                     <h2>All giphs:</h2>
                     @foreach($posts as $post)
                         <div>
-                            Giphy ID: {{$post->giphy_id}}<br>
+                            [{{$post->id}}] Giphy ID: {{$post->giphy_id}}<br>
                             User: (name: {{$post->user->name}})<br>
+                            Likes:<br>
+                            @foreach($post->likes as $like)
+                                by {{$like->user->name}} ({{$like->giphy_id}})<br>
+                            @endforeach
                         </div>
+                        <form method="POST" action="{{ route('like', ['post' => $post->id]) }}">
+                            @csrf
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-primary">
+                                    {{ __('👍') }}
+                                </button>
+                            </div>
+                        </form>
                         <br>
                     @endforeach
                 </div>

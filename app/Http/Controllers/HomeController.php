@@ -25,7 +25,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('user')->get();
+        $posts = Post::with(['user','likes.user'])->orderBy('created_at', 'desc')->get();
         $users = User::all();
 
         return view('home', [
@@ -39,6 +39,18 @@ class HomeController extends Controller
         $user = auth()->user();
         $user->posts()->create([
             'giphy_id' => $request->get('giphy_id'),
+        ]);
+
+        return "OK";
+    }
+
+    public function like(Post $post)
+    {
+        $user = auth()->user();
+
+        $user->likes()->create([
+            'post_id' => $post->id,
+            'giphy_id' => 'some_like_gif',
         ]);
 
         return "OK";
