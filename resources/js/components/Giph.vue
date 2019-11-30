@@ -7,13 +7,18 @@
                 <img :src="giphUrl">
 
                 <div class="row mt-2 ml-4">
-                    <button type="submit" class="btn btn-default">
-                        👍
+                    <button type="submit" class="btn btn-default" @click.prevent="like">
+                        <i class="fa fa-thumbs-o-up"></i>
                     </button>
+                    <a href="btn btn-outline-default" @click.prevent="showLikes = true">{{ getLikeCount }}</a>
+                </div>
+
+                <div class="row mt-2 ml-4">
+                    <img v-for="like in giph.likes" :key="like.id" :src="getGiphyUrl(like.giphy_id)" style="height: 50px; margin-bottom: 10px;">
                 </div>
             </div>
         </div>
-    </di
+    </div>
 </template>
 
 <script>
@@ -21,17 +26,32 @@
         name: "giph",
         props: ['giph'],
         data() {
-            return {};
+            return {
+                showLikes: false
+            };
         },
         computed: {
             profileUrl(){
-                return 'https://i.giphy.com/media/'+this.giph.user.avatar_giphy_id+'/giphy.webp';
+                return this.getGiphyUrl(this.giph.user.avatar_giphy_id);
             },
             giphUrl(){
-                return 'https://i.giphy.com/media/'+this.giph.giphy_id+'/giphy.webp';
+                return this.getGiphyUrl(this.giph.giphy_id);
+            },
+            getLikeCount(){
+                return this.giph.likes_count || 0;
             }
         },
-        methods: {}
+        methods: {
+            like(){
+                axios.post('/api/giphs/'+this.giph.id+'/likes')
+                    .then(response => {
+                        this.$emit('giphupdated', response.data.data);
+                    });
+            },
+            getGiphyUrl(id){
+                return 'https://i.giphy.com/media/'+id+'/giphy.webp';
+            },
+        }
     }
 </script>
 

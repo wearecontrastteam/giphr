@@ -7,7 +7,12 @@
             <div class="mt-1">Loading...</div>
         </div>
 
-        <giph v-for="giph in giphs" :key="giph.id" :giph="giph" v-show="isLoaded" />
+        <giph v-for="giph in giphs"
+              :key="giph.id"
+              :giph="giph"
+              v-show="isLoaded"
+              @giphupdated="handleGiphUpdated(giph, $event)"
+        />
     </div>
 </template>
 
@@ -18,39 +23,10 @@
         data() {
             return {
                 loading: true,
-                giphs: [
-                    {
-                        "id": 1,
-                        "giphy_id": "YsTs5ltWtEhnq",
-                        "user": {
-                            "id": 2,
-                            "giphy_id": "hiLLD9o1wTB3a",
-                            "user": {
-                                "id": 2,
-                                "name": "Not Andy",
-                                "email": "andy@french-property.com",
-                                "avatar_giphy_id": "not-andy-gif"
-                            }
-                        },
-                        "likes": [
-                            {
-                                "id": 1,
-                                "giphy_id": "kigfYxdEa5s1ziA2h1",
-                                "user": {
-                                    "id": 1,
-                                    "name": "Andy Knight",
-                                    "email": "theknight92@gmail.com",
-                                    "avatar_giphy_id": "some-giphy-id"
-                                }
-                            },
-
-                        ]
-                    }
-                ]
+                giphs: []
             };
         },
         created(){
-            // axios.get('/api/user').then(response => console.log(response));
             this.getLatestGiphs();
             this.$bus.on('new-giph', this.getLatestGiphs);
         },
@@ -73,6 +49,10 @@
                         this.giphs = response.data.data;
                         this.loading = false;
                     });
+            },
+            handleGiphUpdated(giph, updatedGiph){
+                giph.likes_count = updatedGiph.likes_count;
+                giph.likes = updatedGiph.likes;
             }
         }
     }
