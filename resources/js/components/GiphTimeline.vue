@@ -49,7 +49,14 @@
                 ]
             };
         },
-
+        created(){
+            // axios.get('/api/user').then(response => console.log(response));
+            this.getLatestGiphs();
+            this.$bus.on('new-giph', this.getLatestGiphs);
+        },
+        beforeDestroy() {
+            this.$bus.off('new-giph', this.getLatestGiphs);
+        },
         computed: {
             isLoading(){
                 return this.loading;
@@ -62,9 +69,10 @@
             getLatestGiphs(){
                 this.loading = true;
                 axios.get('/api/giphs')
-                .then(response => {
-                    this.giphs = response.data.data;
-                })
+                    .then(response => {
+                        this.giphs = response.data.data;
+                        this.loading = false;
+                    });
             }
         }
     }

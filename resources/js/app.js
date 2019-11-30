@@ -19,6 +19,9 @@ window.Vue = require('vue');
 const files = require.context('./', true, /\.vue$/i)
 files.keys().map(key => Vue.component(files(key).default.name, files(key).default))
 
+import VueBus from 'vue-bus';
+Vue.use(VueBus);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

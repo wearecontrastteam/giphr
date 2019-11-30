@@ -5,13 +5,13 @@
                 <div class="card-body">
                     <div class="input-group">
                         <div class="input-group-prepend mr-4">
-                                        <span class="input-group-img">
-                                            <img src="https://i.giphy.com/media/YsTs5ltWtEhnq/giphy.webp" class="rounded-circle profile">
-                                        </span>
+                            <span class="input-group-img">
+                                <img src="https://i.giphy.com/media/YsTs5ltWtEhnq/giphy.webp" class="rounded-circle profile">
+                            </span>
                         </div>
-                        <input type="text" class="form-control" placeholder="What's Giphening?">
+                        <input type="text" class="form-control" placeholder="What's Giphening?" v-model="giphy_id">
                         <div class="input-group-append">
-                            <button class="btn btn-outline-primary" type="button" id="button-addon2">Giph</button>
+                            <button class="btn btn-outline-primary" @click.prevent="createGiph">Giph</button>
                         </div>
                     </div>
                 </div>
@@ -25,10 +25,24 @@
         name: "new-giph",
         props: [],
         data() {
-            return {};
+            return {
+                saving: false,
+                giphy_id: '',
+            };
         },
         computed: {},
-        methods: {}
+        methods: {
+            createGiph(){
+                this.saving = true;
+                axios.post('/api/giphs', {giphy_id: this.giphy_id})
+                .then(response => {
+                    this.giphy_id = '';
+                    if(response.data.hasOwnProperty('status') && response.data.status === 'ok'){
+                        this.$bus.emit('new-giph');
+                    }
+                });
+            }
+        }
     }
 </script>
 

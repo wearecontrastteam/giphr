@@ -1,2 +1,16 @@
-.navbar-brand img { height: 50px; }
-img.profile { width: 38px; height: 38px; }
+body {
+    background: #f9f9f9;
+}
+
+.navbar-brand img {
+    height: 50px;
+}
+
+img.profile {
+    width: 38px;
+    height: 38px;
+}
+
+.nav-link.active {
+    font-weight: bold;
+}

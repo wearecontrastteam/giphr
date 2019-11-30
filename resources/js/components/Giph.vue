@@ -1,5 +1,5 @@
 <template>
-    <div class="col">
+    <div class="col-12 mb-2">
         <div class="card">
             <div class="card-body">
                 <img :src="profileUrl" class="rounded-circle profile mr-4">

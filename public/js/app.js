@@ -1951,6 +1951,14 @@ __webpack_require__.r(__webpack_exports__);
       }]
     };
   },
+  created: function created() {
+    // axios.get('/api/user').then(response => console.log(response));
+    this.getLatestGiphs();
+    this.$bus.on('new-giph', this.getLatestGiphs);
+  },
+  beforeDestroy: function beforeDestroy() {
+    this.$bus.off('new-giph', this.getLatestGiphs);
+  },
   computed: {
     isLoading: function isLoading() {
       return this.loading;
@@ -1966,6 +1974,7 @@ __webpack_require__.r(__webpack_exports__);
       this.loading = true;
       axios.get('/api/giphs').then(function (response) {
         _this.giphs = response.data.data;
+        _this.loading = false;
       });
     }
   }
@@ -2008,10 +2017,28 @@ __webpack_require__.r(__webpack_exports__);
   name: "new-giph",
   props: [],
   data: function data() {
-    return {};
+    return {
+      saving: false,
+      giphy_id: ''
+    };
   },
   computed: {},
-  methods: {}
+  methods: {
+    createGiph: function createGiph() {
+      var _this = this;
+
+      this.saving = true;
+      axios.post('/api/giphs', {
+        giphy_id: this.giphy_id
+      }).then(function (response) {
+        _this.giphy_id = '';
+
+        if (response.data.hasOwnProperty('status') && response.data.status === 'ok') {
+          _this.$bus.emit('new-giph');
+        }
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -19600,6 +19627,68 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
+/***/ "./node_modules/vue-bus/dist/vue-bus.esm.js":
+/*!**************************************************!*\
+  !*** ./node_modules/vue-bus/dist/vue-bus.esm.js ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/*!
+ * vue-bus v1.2.1
+ * https://github.com/yangmingshan/vue-bus
+ * @license MIT
+ */
+function VueBus(Vue) {
+  var bus = new Vue();
+
+  Object.defineProperties(bus, {
+    on: {
+      get: function get() {
+        return this.$on.bind(this)
+      }
+    },
+    once: {
+      get: function get() {
+        return this.$once.bind(this)
+      }
+    },
+    off: {
+      get: function get() {
+        return this.$off.bind(this)
+      }
+    },
+    emit: {
+      get: function get() {
+        return this.$emit.bind(this)
+      }
+    }
+  });
+
+  Object.defineProperty(Vue, 'bus', {
+    get: function get() {
+      return bus
+    }
+  });
+
+  Object.defineProperty(Vue.prototype, '$bus', {
+    get: function get() {
+      return bus
+    }
+  });
+}
+
+if (typeof window !== 'undefined' && window.Vue) {
+  window.Vue.use(VueBus);
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (VueBus);
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Giph.vue?vue&type=template&id=32b1b776&scoped=true&":
 /*!*******************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Giph.vue?vue&type=template&id=32b1b776&scoped=true& ***!
@@ -19615,7 +19704,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "col" }, [
+  return _c("div", { staticClass: "col-12 mb-2" }, [
     _c("div", { staticClass: "card" }, [
       _c("div", { staticClass: "card-body" }, [
         _c("img", {
@@ -19740,47 +19829,67 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "row row-cols-1" }, [
+    _c("div", { staticClass: "col mb-4" }, [
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "input-group" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.giphy_id,
+                  expression: "giphy_id"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "What's Giphening?" },
+              domProps: { value: _vm.giphy_id },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.giphy_id = $event.target.value
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "input-group-append" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-outline-primary",
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.createGiph($event)
+                    }
+                  }
+                },
+                [_vm._v("Giph")]
+              )
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row row-cols-1" }, [
-      _c("div", { staticClass: "col mb-4" }, [
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-body" }, [
-            _c("div", { staticClass: "input-group" }, [
-              _c("div", { staticClass: "input-group-prepend mr-4" }, [
-                _c("span", { staticClass: "input-group-img" }, [
-                  _c("img", {
-                    staticClass: "rounded-circle profile",
-                    attrs: {
-                      src: "https://i.giphy.com/media/YsTs5ltWtEhnq/giphy.webp"
-                    }
-                  })
-                ])
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: { type: "text", placeholder: "What's Giphening?" }
-              }),
-              _vm._v(" "),
-              _c("div", { staticClass: "input-group-append" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-outline-primary",
-                    attrs: { type: "button", id: "button-addon2" }
-                  },
-                  [_vm._v("Giph")]
-                )
-              ])
-            ])
-          ])
-        ])
+    return _c("div", { staticClass: "input-group-prepend mr-4" }, [
+      _c("span", { staticClass: "input-group-img" }, [
+        _c("img", {
+          staticClass: "rounded-circle profile",
+          attrs: { src: "https://i.giphy.com/media/YsTs5ltWtEhnq/giphy.webp" }
+        })
       ])
     ])
   }
@@ -31966,9 +32075,12 @@ webpackContext.id = "./resources/js sync recursive \\.vue$/";
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
   \*****************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue_bus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-bus */ "./node_modules/vue-bus/dist/vue-bus.esm.js");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -31990,6 +32102,8 @@ var files = __webpack_require__("./resources/js sync recursive \\.vue$/");
 files.keys().map(function (key) {
   return Vue.component(files(key)["default"].name, files(key)["default"]);
 });
+
+Vue.use(vue_bus__WEBPACK_IMPORTED_MODULE_0__["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
