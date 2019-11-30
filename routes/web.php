@@ -19,4 +19,4 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/post', 'HomeController@post')->name('post');
-Route::post('/like/{post}', 'HomeController@like')->name('like');
+Route::post('/like/{giph}', 'HomeController@like')->name('like');

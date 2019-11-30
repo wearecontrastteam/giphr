@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Post;
+use App\Giph;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -25,31 +25,31 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $posts = Post::with(['user','likes.user'])->orderBy('created_at', 'desc')->get();
+        $giphs = Giph::with(['user','likes.user'])->orderBy('created_at', 'desc')->get();
         $users = User::all();
 
         return view('home', [
             'users' => $users,
-            'posts' => $posts,
+            'giphs' => $giphs,
         ]);
     }
 
     public function post(Request $request)
     {
         $user = auth()->user();
-        $user->posts()->create([
+        $user->giphs()->create([
             'giphy_id' => $request->get('giphy_id'),
         ]);
 
         return "OK";
     }
 
-    public function like(Post $post)
+    public function like(Giph $giph)
     {
         $user = auth()->user();
 
         $user->likes()->create([
-            'post_id' => $post->id,
+            'giph_id' => $giph->id,
             'giphy_id' => 'some_like_gif',
         ]);
 

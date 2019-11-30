@@ -39,16 +39,16 @@
 
                 <div class="card-body">
                     <h2>All giphs:</h2>
-                    @foreach($posts as $post)
+                    @foreach($giphs as $giph)
                         <div>
-                            [{{$post->id}}] Giphy ID: {{$post->giphy_id}}<br>
-                            User: (name: {{$post->user->name}})<br>
+                            [{{$giph->id}}] Giphy ID: {{$giph->giphy_id}}<br>
+                            User: (name: {{$giph->user->name}})<br>
                             Likes:<br>
-                            @foreach($post->likes as $like)
+                            @foreach($giph->likes as $like)
                                 by {{$like->user->name}} ({{$like->giphy_id}})<br>
                             @endforeach
                         </div>
-                        <form method="POST" action="{{ route('like', ['post' => $post->id]) }}">
+                        <form method="POST" action="{{ route('like', ['giph' => $giph->id]) }}">
                             @csrf
                             <div class="col-md-2">
                                 <button type="submit" class="btn btn-primary">
