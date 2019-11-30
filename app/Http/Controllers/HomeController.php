@@ -34,6 +34,7 @@ class HomeController extends Controller
         ]);
     }
 
+    // TODO REMOVE
     public function post(Request $request)
     {
         $user = auth()->user();
@@ -44,6 +45,7 @@ class HomeController extends Controller
         return "OK";
     }
 
+    // TODO REMOVE
     public function like(Giph $giph)
     {
         $user = auth()->user();
