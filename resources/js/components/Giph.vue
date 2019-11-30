@@ -7,13 +7,13 @@
                 <img :src="giphUrl">
 
                 <div class="row mt-2 ml-4">
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-default">
                         👍
                     </button>
                 </div>
             </div>
         </div>
-    </div>
+    </di
 </template>
 
 <script>
