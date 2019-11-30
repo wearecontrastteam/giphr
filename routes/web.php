@@ -18,7 +18,12 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/profile', 'HomeController@profile')->name('profile');
+Route::post('/profile', 'HomeController@updateProfile')->name('updateProfile');
+
+// TODO REMOVE
 Route::post('/post', 'HomeController@post')->name('post');
+// TODO REMOVE
 Route::post('/like/{giph}', 'HomeController@like')->name('like');
 
 // Socialite (social login)
