@@ -1,8 +1,16 @@
-// Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+body {
+    background: #f9f9f9;
+}
 
-// Variables
-@import 'variables';
+.navbar-brand img {
+    height: 50px;
+}
 
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
+img.profile {
+    width: 38px;
+    height: 38px;
+}
+
+.nav-link.active {
+    font-weight: bold;
+}

@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Giph;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\Giph as GiphResource;
 use App\Like;
 use App\User;
@@ -18,7 +19,7 @@ class GiphController extends Controller
 
     public function index()
     {
-        return GiphResource::collection(Giph::paginate());
+        return GiphResource::collection(Giph::with('user')->latest()->paginate());
     }
 
     public function show(Giph $giph)
