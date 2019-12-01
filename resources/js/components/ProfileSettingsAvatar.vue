@@ -1,11 +1,10 @@
 <template>
     <div>
-        <div v-if="giphy_id" class="text-center">
-            <img :src="'https://i.giphy.com/media/' + giphy_id + '/giphy.webp'" style="max-width: 100%">
-            <input type="hidden" name="avatar_giphy_id" :value="giphy_id">
+        <div v-if="id" class="text-center">
+            <img :src="'https://i.giphy.com/media/' + id + '/giphy.webp'" style="max-width: 100%">
+            <input type="hidden" name="avatar_giphy_id" :value="id">
         </div>
-        <giphy-search v-if="giphy_id" placeholder-text="Find a new avatar..."></giphy-search>
-        <giphy-search v-else placeholder-text="Choose your avatar..."></giphy-search>
+        <giphy-search :placeholder-text="getPlaceholder"/>
     </div>
 
 </template>
@@ -20,18 +19,32 @@
         },
         data() {
             return {
+                id: ''
             }
         },
         created(){
+            this.id = this.giphy_id;
             this.$bus.on('select-giph', this.setSelectedGiph);
         },
         beforeDestroy() {
             this.$bus.off('select-giph', this.setSelectedGiph);
         },
+        computed: {
+            getPlaceholder(){
+                return this.id
+                    ? 'Find a new avatar...'
+                    : 'Choose your avatar...'
+            }
+        },
         methods: {
             setSelectedGiph(data) { // there's probably a more concise / more declarative way to do this
-                this.giphy_id = data.giphy_id;
+                this.id = data.giphy_id;
                 this.$bus.emit('clear-search');
+            }
+        },
+        watch: {
+            giphy_id(newValue, oldValue){
+                this.id = newValue;
             }
         }
     };

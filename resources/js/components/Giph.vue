@@ -3,7 +3,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-1">
+                    <div class="col-auto">
                         <img :src="avatarUrl" class="rounded-circle profile">
                     </div>
                     <div class="col">

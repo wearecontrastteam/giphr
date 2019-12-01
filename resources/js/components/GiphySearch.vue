@@ -3,17 +3,22 @@
         <div class="col mb-4">
             <div class="card">
                 <div class="card-body">
-                    <div class="input-group">
-                        <div v-if="avatarGiphyId" class="input-group-prepend mr-4">
-                            <span class="input-group-img">
+                    <div class="row">
+                        <div class="col-auto">
+                            <div v-if="avatarGiphyId" class="input-group-prepend">
                                 <img :src="profileUrl" class="rounded-circle profile">
-                            </span>
+                            </div>
                         </div>
-                        <input type="text" class="form-control" :placeholder="placeholderText" v-model="search_query">
-                        <div v-if="buttonText" class="input-group-append">
-                            <button class="btn btn-outline-primary" @click.prevent="buttonClicked">{{buttonText}}</button>
+                        <div class="col">
+                            <div class="input-group">
+                                <input type="text" class="form-control" :placeholder="placeholderText" v-model="search_query">
+                                <div v-if="buttonText" class="input-group-append">
+                                    <button class="btn btn-outline-primary" @click.prevent="buttonClicked">{{buttonText}}</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
 
                     <span class="status" v-if="status">{{status}}</span>
 
@@ -44,7 +49,6 @@
             return {
                 saving: false,
                 giphy_id: '',
-
                 search_query: '',
                 search_results: [],
                 status: "",
@@ -75,44 +79,33 @@
         },
         methods: {
             setSelectedGiph(data){
-                console.log("selected giph: ", data.giphy_id);
                 this.giphy_id = data.giphy_id;
             },
 
             process(val) {
-                console.log('process');
                 this.doTheSearch();
             },
 
             doTheSearch: _.debounce(function() {
-                //console.log("_.debounce'd: ", this.search_query);
                 if (this.search_query !== '') {
-                    //console.log('searching for ' + this.search_query);
                     this.status = "Searching for "+this.search_query+"...";
                     axios.get("https://api.giphy.com/v1/"+(this.cb_sticker?"stickers":"gifs")+"/search?api_key=5bknz8GPVSWCaiMGxx51ojMqRLK963LJ&limit=" + this.count + "&q=" + this.search_query)
                         .then(response => {
-                            //console.log(res);
-                            //console.log("OK", res);
                             this.search_results = [];
-                            console.log(response.data.data);
-                            for (var entry_i in response.data.data) {
-
-                                var entry = response.data.data[entry_i];
-                                console.log(entry);
-
+                            response.data.data.forEach( entry => {
                                 this.search_results.push({
                                     width: entry.images.fixed_height_small.width,
                                     height: entry.images.fixed_height_small.height,
                                     src: entry.images.fixed_height_small.webp,
                                     giphy_id: entry.id
                                 })
-                            }
-                            this.status = (this.search_results.length == 0) ? "No results for " +  this.search_query: "";
-                        }).catch((error) => {
-                        console.log(error);
-                    });
-                } else {
+                            });
 
+                            this.status = (this.search_results.length === 0) ? "No results for " +  this.search_query: "";
+                        }).catch((error) => {
+                            console.log(error);
+                        });
+                } else {
                     this.search_results = [];
                     this.status = "";
                 }
