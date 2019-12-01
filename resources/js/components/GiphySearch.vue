@@ -11,14 +11,16 @@
                         </div>
                         <div class="col">
                             <div class="input-group">
-                                <input type="text" class="form-control" :placeholder="placeholderText" v-model="search_query" @keyup="process2">
-                                <div v-if="buttonText" class="input-group-append">
-                                    <button class="btn btn-outline-primary" @click.prevent="buttonClicked">{{buttonText}}</button>
+                                <input type="text" class="form-control" :placeholder="placeholderText" v-model="search_query">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-primary" @click.prevent="search">Search</button>
+                                </div>
+                                <div v-if="showGiphButton" class="input-group-append">
+                                    <button :class="getGiphButtonClasses" @click.prevent="giph">Giph</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-
 
                     <span class="status" v-if="status">{{status}}</span>
 
@@ -40,11 +42,18 @@
 <script>
     export default {
         name: "giphy-search",
-        props: [
-            'placeholderText',
-            'buttonText',
-            'avatarGiphyId'
-        ],
+        props: {
+            placeholderText: {
+                type: String
+            },
+            showGiphButton: {
+                type: Boolean,
+                default: true
+            },
+            avatarGiphyId: {
+                type: String
+            },
+        },
         data() {
             return {
                 saving: false,
@@ -54,7 +63,7 @@
                 status: "",
                 count: 25, // 25 seems to be the maximum allowed by the API
                 cb_sticker: false,
-                dd_sticker_bg: "white"
+                dd_sticker_bg: "white",
             };
         },
         created(){
@@ -67,30 +76,23 @@
             this.$bus.off('clear-search', this.clearSearch);
         },
         watch: {
-            cb_sticker(val) { this.process(val); },
-            dd_sticker_bg(val) { this.process(val); },
-            count(val) { this.process(val); },
-            search_query(val) { this.process(val); }
+            search_query(val) { this.search(val); }
         },
         computed: {
             profileUrl(){
                 return 'https://i.giphy.com/media/'+this.avatarGiphyId+'/giphy.webp';
+            },
+            getGiphButtonClasses(){
+                return this.giphy_id !== '' ? 'btn btn-primary' : 'btn btn-outline-secondary disabled';
             }
         },
         methods: {
             setSelectedGiph(data){
                 this.giphy_id = data.giphy_id;
             },
-
-            process2(val) {
-                //console.log(2222);
+            search(val) {
                 this.doTheSearch();
             },
-
-            process(val) {
-                this.doTheSearch();
-            },
-
             doTheSearch: _.debounce(function() {
                 if (this.search_query !== '') {
                     this.status = "Searching for "+this.search_query+"...";
@@ -119,11 +121,15 @@
                 this.search_query = '';
                 this.search_results = [];
                 this.status = "";
+                this.giphy_id = '';
             },
-            buttonClicked() {
-                this.$bus.emit('giphy-search-button-clicked', {
-                    "giphy_id": this.giphy_id
-                });
+            giph() {
+                if(this.giphy_id !== '') {
+                    this.$bus.emit('giphy-search-button-clicked', {
+                        "giphy_id": this.giphy_id
+                    });
+                    this.clearSearch();
+                }
             }
         }
     }
