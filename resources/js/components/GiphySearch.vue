@@ -4,7 +4,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-auto" v-if="avatarGiphyId">
+                        <div class="d-none d-sm-none d-md-flex col-auto" v-if="avatarGiphyId">
                             <div class="input-group-prepend">
                                 <img :src="profileUrl" class="rounded-circle profile">
                             </div>
