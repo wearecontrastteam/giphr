@@ -10,6 +10,7 @@
         <giph v-for="giph in giphs"
               :key="giph.id"
               :giph="giph"
+              :logged-in-user-id="loggedInUserId"
               v-show="isLoaded"
               @giphupdated="handleGiphUpdated(giph, $event)"
         />
@@ -20,6 +21,9 @@
     export default {
         name: "giph-timeline",
         props: {
+            "loggedInUserId": {
+
+            },
             "userHandle": {
                 default: null
             }
@@ -31,6 +35,7 @@
             };
         },
         created(){
+            console.log("Logged in user ID: ", this.loggedInUserId);
             this.getLatestGiphs();
             this.$bus.on('new-giph', this.getLatestGiphs);
         },
