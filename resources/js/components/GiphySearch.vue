@@ -103,7 +103,7 @@
                                 this.search_results.push({
                                     width: entry.images.fixed_height_small.width,
                                     height: entry.images.fixed_height_small.height,
-                                    src: entry.images.fixed_height_small.gif,
+                                    src: entry.images.fixed_height_small.url,
                                     giphy_id: entry.id
                                 })
                             });

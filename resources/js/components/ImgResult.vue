@@ -22,7 +22,6 @@
             }
         },
         created(){
-            // axios.get('/api/user').then(response => console.log(response));
             this.$bus.on('select-giph', this.setSelectedGiph);
         },
         beforeDestroy() {
