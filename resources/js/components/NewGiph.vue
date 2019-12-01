@@ -9,10 +9,22 @@
                                 <img :src="profileUrl" class="rounded-circle profile">
                             </span>
                         </div>
-                        <input type="text" class="form-control" placeholder="What's Giphening?" v-model="giphy_id">
+                        <input type="text" class="form-control" placeholder="What's Giphening?" v-model="search_query">
                         <div class="input-group-append">
                             <button class="btn btn-outline-primary" @click.prevent="createGiph">Giph</button>
                         </div>
+                    </div>
+
+                    <span class="status" v-if="status">{{status}}</span>
+
+                    <div class="results" v-if="search_results.length > 0" style="margin-top:2em; overflow-y:scroll; max-height:270px">
+                        <img-result v-for="entry in search_results"
+z                                   :key="entry.giphy_id"
+                                    :imgwidth="entry.width"
+                                    :imgheight="entry.height"
+                                    :imgsrc="entry.src"
+                                    :bgcolor="dd_sticker_bg"
+                                    :giphy_id="entry.giphy_id"/>
                     </div>
                 </div>
             </div>
@@ -28,7 +40,27 @@
             return {
                 saving: false,
                 giphy_id: '',
+
+                search_query: '',
+                search_results: [],
+                status: "",
+                count: 25, // 25 seems to be the maximum allowed by the API
+                cb_sticker: false,
+                dd_sticker_bg: "white"
             };
+        },
+        created(){
+            // axios.get('/api/user').then(response => console.log(response));
+            this.$bus.on('select-giph', this.setSelectedGiph);
+        },
+        beforeDestroy() {
+            this.$bus.off('select-giph', this.setSelectedGiph);
+        },
+        watch: {
+            cb_sticker(val) { this.process(val); },
+            dd_sticker_bg(val) { this.process(val); },
+            count(val) { this.process(val); },
+            search_query(val) { this.process(val); }
         },
         computed: {
             profileUrl(){
@@ -36,7 +68,13 @@
             }
         },
         methods: {
+            setSelectedGiph(data){
+                console.log("seleted giph: ", data.giphy_id);
+                this.giphy_id = data.giphy_id;
+            },
+
             createGiph(){
+                console.log("Creating new giph: ", this.giphy_id);
                 this.saving = true;
                 axios.post('/api/giphs', {giphy_id: this.giphy_id})
                 .then(response => {
@@ -44,12 +82,60 @@
                     if(response.data.hasOwnProperty('status') && response.data.status === 'ok'){
                         this.$bus.emit('new-giph');
                     }
+                    this.search_results = [];
+                    this.search_query = '';
                 });
-            }
+            },
+
+            process(val) {
+                console.log('process');
+                this.doTheSearch();
+            },
+
+            //doTheSearch() {
+            doTheSearch: _.debounce(function() {
+                //console.log("_.debounce'd: ", this.search_query);
+                if (this.search_query !== '') {
+                    //console.log('searching for ' + this.search_query);
+                    this.status = "Searching for "+this.search_query+"...";
+                    axios.get("https://api.giphy.com/v1/"+(this.cb_sticker?"stickers":"gifs")+"/search?api_key=5bknz8GPVSWCaiMGxx51ojMqRLK963LJ&limit=" + this.count + "&q=" + this.search_query)
+                        .then(response => {
+                            //console.log(res);
+                            //console.log("OK", res);
+                            this.search_results = [];
+                            console.log(response.data.data);
+                            for (var entry_i in response.data.data) {
+
+                                var entry = response.data.data[entry_i];
+                                console.log(entry);
+
+                                this.search_results.push({
+                                    width: entry.images.fixed_height_small.width,
+                                    height: entry.images.fixed_height_small.height,
+                                    src: entry.images.fixed_height_small.webp,
+                                    giphy_id: entry.id
+                                })
+                            }
+                            this.status = (this.search_results.length == 0) ? "No results for " +  this.search_query: "";
+                        }).catch((error) => {
+                        console.log(error);
+                    });
+                } else {
+
+                    this.search_results = [];
+                    this.status = "";
+                }
+            }, 750)
         }
     }
 </script>
 
 <style scoped>
-
+    .results {
+        padding: 1em;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: center;
+    }
 </style>
