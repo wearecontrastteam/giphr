@@ -1,11 +1,24 @@
 <template>
-    <giphy-search :avatar-giphy-id="avatarGiphyId" placeholder-text="What's giphening?" button-text="Giph"></giphy-search>
+    <div>
+        <div v-if="userPostCount === 0 && !postedJayZ" class="alert alert-primary" role="alert">
+            You've not posted any giphs yet. Click <a href="#" @click="giphJayZ($event)">here</a> to post one...
+        </div>
+        <giphy-search :avatar-giphy-id="avatarGiphyId" placeholder-text="What's giphening?" button-text="Giph"></giphy-search>
+    </div>
 </template>
 
 <script>
     export default {
         name: "new-giph",
-        props: ['avatarGiphyId'],
+        props: [
+            'avatarGiphyId',
+            'userPostCount'
+        ],
+        data() {
+            return {
+                'postedJayZ': false
+            }
+        },
         created(){
             this.$bus.on('giphy-search-button-clicked', this.createGiph);
         },
@@ -24,6 +37,13 @@
                         }
                     });
             },
+            giphJayZ(event) {
+                event.preventDefault();
+                this.postedJayZ = true;
+                this.createGiph({
+                    'giphy_id': 'cYJgsdeB6VThe'
+                })
+            }
         }
     }
 </script>
