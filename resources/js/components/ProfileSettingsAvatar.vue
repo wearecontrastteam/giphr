@@ -1,0 +1,42 @@
+<template>
+    <div>
+        <div v-if="giphy_id" class="text-center">
+            <img :src="'https://i.giphy.com/media/' + giphy_id + '/giphy.webp'" style="max-width: 100%">
+            <input type="hidden" name="avatar_giphy_id" :value="giphy_id">
+        </div>
+        <giphy-search v-if="giphy_id" placeholder-text="Find a new avatar..."></giphy-search>
+        <giphy-search v-else placeholder-text="Choose your avatar..."></giphy-search>
+    </div>
+
+</template>
+
+<script>
+
+    export default {
+        name: "profile-settings-avatar",
+
+        props: {
+            giphy_id: ''
+        },
+        data() {
+            return {
+            }
+        },
+        created(){
+            this.$bus.on('select-giph', this.setSelectedGiph);
+        },
+        beforeDestroy() {
+            this.$bus.off('select-giph', this.setSelectedGiph);
+        },
+        methods: {
+            setSelectedGiph(data) { // there's probably a more concise / more declarative way to do this
+                this.giphy_id = data.giphy_id;
+                this.$bus.emit('clear-search');
+            }
+        }
+    };
+</script>
+
+<style scoped>
+
+</style>
