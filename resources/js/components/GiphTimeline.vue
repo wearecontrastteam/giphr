@@ -14,6 +14,21 @@
               v-show="isLoaded"
               @giphupdated="handleGiphUpdated(giph, $event)"
         />
+
+        <div v-if="showPagination" class="col-12">
+            <nav>
+                <ul class="pagination">
+                    <li :class="{'page-item': true, 'disabled': isFirstPage}"><a class="page-link"  href="#" @click.prevent="goToPage(getPreviousPageNumber)">Previous</a></li>
+
+                    <li v-for="page in pagination" :class="page.item_classes">
+                        <a :class="page.link_classes" href="#" @click.prevent="goToPage(page.number)">{{ page.number }}</a>
+                    </li>
+
+                    <li :class="{'page-item': true, 'disabled': isLastPage}"><a class="page-link" href="#" @click.prevent="goToPage(getNextPageNumber)">Next</a></li>
+                </ul>
+            </nav>
+        </div>
+
     </div>
 </template>
 
@@ -31,6 +46,18 @@
         data() {
             return {
                 loading: true,
+                params: {
+                    page: 1,
+                },
+                api: {
+                    current_page: 1,
+                    last_page: 1,
+                    path: '',
+                    per_page: 50,
+                    from: 1,
+                    to: 2,
+                    total: 2,
+                },
                 giphs: []
             };
         },
@@ -48,7 +75,45 @@
             },
             isLoaded(){
                 return this.loading === false;
-            }
+            },
+            showPagination(){
+                return this.isLoaded && this.api.last_page > 1
+            },
+            pagination(){
+                let pagination = [];
+                for(var i = 1; i <= this.api.last_page; i++){
+                    let page = {
+                        item_classes: 'page-item',
+                        link_classes: 'page-link',
+                        number: i
+                    };
+
+                    if(this.api.current_page === i){
+                        page.item_classes += ' active'
+                    }
+
+                    pagination.push(page);
+                }
+                return pagination;
+            },
+            isFirstPage(){
+                return this.api.current_page === 1
+            },
+            isLastPage(){
+                return this.api.current_page === this.api.last_page;
+            },
+            getPreviousPageNumber(){
+                if(this.isFirstPage){
+                    return 1;
+                }
+                return this.api.current_page - 1;
+            },
+            getNextPageNumber(){
+                if(this.isLastPage){
+                    return this.api.last_page;
+                }
+                return this.api.current_page + 1;
+            },
         },
         methods: {
             getLatestGiphs(){
@@ -56,17 +121,22 @@
                 axios.get(this.getLatestGiphsUrl())
                     .then(response => {
                         this.giphs = response.data.data;
+                        this.api = response.data.meta;
                         this.loading = false;
                     });
             },
             getLatestGiphsUrl(){
                 return this.userHandle === null
-                    ? '/api/giphs'
-                    : '/api/users/@'+this.userHandle+'/giphs'
+                    ? '/api/giphs?page='+this.params.page
+                    : '/api/users/@'+this.userHandle+'/giphs?page='+this.params.page
             },
             handleGiphUpdated(giph, updatedGiph){
                 giph.likes_count = updatedGiph.likes_count;
                 giph.likes = updatedGiph.likes;
+            },
+            goToPage(page){
+                this.params.page = page;
+                this.getLatestGiphs();
             }
         }
     }
