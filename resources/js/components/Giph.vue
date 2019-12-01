@@ -29,7 +29,7 @@
                         </a>
                     </div>
                     <div class="col">
-                        <img v-for="like in giph.likes" :key="like.id" :src="getGiphyUrl(like.giphy_id)" style="height: 50px; margin-bottom: 5px; margin-right: 5px;">
+                        <img v-for="like in giph.likes" :key="like.id" :src="getGiphyUrl(like.giphy_id)" v-tooltip.top-center="likeTooltipText(like)" style="height: 50px; margin-bottom: 5px; margin-right: 5px;">
                     </div>
                 </div>
             </div>
@@ -79,6 +79,9 @@
                             this.liking = false;
                         });
                 }
+            },
+            likeTooltipText(like) {
+                return like.user.name + ' (@' + like.user.handle + ') likes this';
             },
             getGiphyUrl(id){
                 return 'https://i.giphy.com/media/'+id+'/giphy.webp';
