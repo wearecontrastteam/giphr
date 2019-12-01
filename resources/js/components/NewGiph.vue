@@ -4,13 +4,14 @@
             <div class="card">
                 <div class="card-body">
                     <div class="input-group">
-                        <div class="input-group-prepend mr-4">
+                        <div v-if="avatarGiphyId" class="input-group-prepend mr-4">
                             <span class="input-group-img">
                                 <img :src="profileUrl" class="rounded-circle profile">
                             </span>
                         </div>
-                        <input type="text" class="form-control" placeholder="What's Giphening?" v-model="search_query">
-                        <div class="input-group-append">
+                        <input v-if="avatarGiphyId" type="text" class="form-control" placeholder="What's Giphening?" v-model="search_query">
+                        <input v-else type="text" class="form-control" placeholder="Find an avatar..." v-model="search_query">
+                        <div v-if="avatarGiphyId" class="input-group-append">
                             <button class="btn btn-outline-primary" @click.prevent="createGiph">Giph</button>
                         </div>
                     </div>
@@ -19,7 +20,7 @@
 
                     <div class="results" v-if="search_results.length > 0" style="margin-top:2em; overflow-y:scroll; max-height:270px">
                         <img-result v-for="entry in search_results"
-z                                   :key="entry.giphy_id"
+                                    :key="entry.giphy_id"
                                     :imgwidth="entry.width"
                                     :imgheight="entry.height"
                                     :imgsrc="entry.src"
@@ -52,9 +53,11 @@ z                                   :key="entry.giphy_id"
         created(){
             // axios.get('/api/user').then(response => console.log(response));
             this.$bus.on('select-giph', this.setSelectedGiph);
+            this.$bus.on('clear-search', this.clearSearch);
         },
         beforeDestroy() {
             this.$bus.off('select-giph', this.setSelectedGiph);
+            this.$bus.off('clear-search', this.clearSearch);
         },
         watch: {
             cb_sticker(val) { this.process(val); },
@@ -69,7 +72,7 @@ z                                   :key="entry.giphy_id"
         },
         methods: {
             setSelectedGiph(data){
-                console.log("seleted giph: ", data.giphy_id);
+                console.log("selected giph: ", data.giphy_id);
                 this.giphy_id = data.giphy_id;
             },
 
@@ -125,7 +128,12 @@ z                                   :key="entry.giphy_id"
                     this.search_results = [];
                     this.status = "";
                 }
-            }, 750)
+            }, 750),
+            clearSearch() {
+                this.search_query = '';
+                this.search_results = [];
+                this.status = "";
+            }
         }
     }
 </script>
