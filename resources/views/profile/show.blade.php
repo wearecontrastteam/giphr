@@ -35,7 +35,7 @@
                         </div>
                     </div>
                 </div>
-                <giph-timeline user-handle="{{ $user->handle }}"></giph-timeline>
+                <giph-timeline user-handle="{{ $user->handle }}" :logged-in-user-id="{{ auth()->user()->id }}"></giph-timeline>
             </div>
         </div>
     </div>

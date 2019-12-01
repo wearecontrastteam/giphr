@@ -43,4 +43,10 @@ class Giph extends Model
     {
         return $this->hasMany(Like::class);
     }
+
+    public function delete()
+    {
+        $this->likes()->delete();
+        return parent::delete();
+    }
 }

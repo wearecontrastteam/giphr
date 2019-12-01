@@ -22,8 +22,9 @@ Route::middleware('auth')->namespace('Api')->group(function (){
 
     Route::prefix('giphs')->name('giphs.')->group(function() {
         Route::get('/', 'GiphController@index')->name('index');
+        Route::post('/', 'GiphController@create')->name('create');
         Route::get('/{giph}', 'GiphController@show')->name('show');
-        Route::post('/', 'GiphController@create')->name('postGiph'); // rename to post or something else?
+        Route::delete('/{giph}', 'GiphController@delete')->name('delete');
         Route::post('/{giph}/likes', 'GiphController@like')->name('like');
     });
 });

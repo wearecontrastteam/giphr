@@ -14,19 +14,6 @@
 
             <form method="POST" action="{{ route('profile.update', $user) }}">
                 @csrf
-{{--                <div class="form-group row">--}}
-{{--                    <label for="avatar_giphy_id" class="col-md-3 col-form-label text-md-right">{{ __('Your avatar') }}</label>--}}
-
-{{--                    <div class="col-md-7">--}}
-{{--                        <input id="avatar_giphy_id" type="text" class="form-control @error('name') is-invalid @enderror" name="avatar_giphy_id" value="{{ $user->avatar_giphy_id }}" required>--}}
-
-{{--                        @error('avatar_giphy_id')--}}
-{{--                            <span class="invalid-feedback" role="alert">--}}
-{{--                                <strong>{{ $message }}</strong>--}}
-{{--                            </span>--}}
-{{--                        @enderror--}}
-{{--                    </div>--}}
-{{--                </div>--}}
 
                 <div class="form-group row">
                     <label for="avatar_giphy_id" class="col-md-3 col-form-label text-md-right">{{ __('Your avatar') }}</label>

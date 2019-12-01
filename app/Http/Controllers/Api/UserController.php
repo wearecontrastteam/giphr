@@ -16,6 +16,7 @@ class UserController extends Controller
         return GiphResource::collection(
             Giph::whereUserId($user->id)
                 ->with(['user', 'likes.user'])
+                ->latest()
                 ->paginate(20)
         );
     }
