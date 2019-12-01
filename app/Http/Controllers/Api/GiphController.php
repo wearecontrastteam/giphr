@@ -19,7 +19,11 @@ class GiphController extends Controller
 
     public function index()
     {
-        return GiphResource::collection(Giph::with('user')->latest()->paginate());
+        return GiphResource::collection(
+            Giph::with(['user', 'likes.user'])
+                ->latest()
+                ->paginate()
+        );
     }
 
     public function show(Giph $giph)
@@ -31,13 +35,9 @@ class GiphController extends Controller
         return new GiphResource($giph);
     }
 
-    public function postGiph(Request $request)
+    public function create(Request $request)
     {
-        // For manual testing with Postman
-        //Auth::login(User::find(2));
-
-        $user = auth()->user();
-        $user->giphs()->create([
+        auth()->user()->giphs()->create([
             'giphy_id' => $request->get('giphy_id'),
         ]);
 
@@ -46,17 +46,26 @@ class GiphController extends Controller
 
     public function like(Giph $giph)
     {
-        // For manual testing with Postman
-        //Auth::login(User::find(2)); // TEMP
+        $user_id = auth()->id();
+        if($giph->likes()->whereUserId($user_id)->exists()){
+            $giph->likes()->whereUserId($user_id)->delete();
+        } else {
+            $giph->likes()->create([
+                'user_id' => auth()->user()->id,
+                'giphy_id' => $this->getRandomLikeGiphyId()
+            ]);
+        }
 
-        $user = auth()->user();
-        Like::updateOrCreate([
-            'user_id' => $user->id,
-            'giph_id' => $giph->id,
-        ], [
-            'giphy_id' => 'some_like_gif'
-        ]);
+        return new GiphResource($giph->fresh()->load('likes.user'));
+    }
 
-        return ['status' => 'ok'];
+    private function getRandomLikeGiphyId()
+    {
+        return collect([
+            'kigfYxdEa5s1ziA2h1', 'tIeCLkB8geYtW', '8xSnw21AM7OQo', 'awXuQy3EFjOLu', 'oBPOP48aQpIxq', 'FdEtkemRg6vo4',
+            '10tbKyKsjdrOzC', 'SP11Gcowulfr2', '8SyzTfbhThVNS', 'cbb8zL5wbNnfq', 'cGEWR5jiq9AWc', 'xGDVFwXnboGY',
+            '4cxhgC3nosoWk', '3o6Zt8qDiPE2d3kayI', 'l3JDwkm6TeNqTkoMM', 'XreQmk7ETCak0', 'GCvktC0KFy9l6', '9Ai5dIk8xvBm0',
+            '3KVKgMOs8rXnomiVdD', 'FpKKILCKqNIgIE1GZf', 'oyZAfALXOHm6c6DHne', '1dagNhv8Oqu6l8U3ZK', 'b5WsjNpMc35za'
+        ])->random(1)[0];
     }
 }

@@ -27,6 +27,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Giph extends Model
 {
+    protected $withCount = ['likes'];
+
     public $fillable = [
         'user_id',
         'giphy_id'
