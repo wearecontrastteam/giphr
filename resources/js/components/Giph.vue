@@ -105,7 +105,7 @@
                     : (like.user.name + ' (@' + like.user.handle + ') likes this');
             },
             getGiphyUrl(id){
-                return 'https://i.giphy.com/media/'+id+'/giphy.gih';
+                return 'https://i.giphy.com/media/'+id+'/giphy.gif';
             },
             deleteGiph(){
                 if(confirm('Are you sure you want to delete this Giph?')){

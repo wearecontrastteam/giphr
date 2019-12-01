@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-if="id" class="text-center">
-            <img :src="'https://i.giphy.com/media/' + id + '/giphy.gih'" style="max-width: 100%">
+            <img :src="'https://i.giphy.com/media/' + id + '/giphy.gif'" style="max-width: 100%">
             <input type="hidden" name="avatar_giphy_id" :value="id">
         </div>
         <giphy-search :placeholder-text="getPlaceholder" :showGiphButton="false" />

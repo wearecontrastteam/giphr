@@ -80,7 +80,7 @@
         },
         computed: {
             profileUrl(){
-                return 'https://i.giphy.com/media/'+this.avatarGiphyId+'/giphy.gih';
+                return 'https://i.giphy.com/media/'+this.avatarGiphyId+'/giphy.gif';
             },
             getGiphButtonClasses(){
                 return this.giphy_id !== '' ? 'btn btn-primary' : 'btn btn-outline-secondary disabled';
@@ -103,7 +103,7 @@
                                 this.search_results.push({
                                     width: entry.images.fixed_height_small.width,
                                     height: entry.images.fixed_height_small.height,
-                                    src: entry.images.fixed_height_small.gih,
+                                    src: entry.images.fixed_height_small.gif,
                                     giphy_id: entry.id
                                 })
                             });
