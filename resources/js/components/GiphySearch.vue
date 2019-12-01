@@ -80,7 +80,7 @@
         },
         computed: {
             profileUrl(){
-                return 'https://i.giphy.com/media/'+this.avatarGiphyId+'/giphy.gif';
+                return 'https://media1.giphy.com/media/'+this.avatarGiphyId+'/100w.gif';
             },
             getGiphButtonClasses(){
                 return this.giphy_id !== '' ? 'btn btn-primary' : 'btn btn-outline-secondary disabled';

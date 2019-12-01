@@ -1,5 +1,4 @@
 <template>
-<!--    <div class="imgresult-entry" @click="onClick" v-bind:class="{ selected: is_selected }" v-bind:style="{width: imgwidth + 'px', height: imgheight + 'px', backgroundImage: 'url('+imgsrc+')', backgroundColor:bgcolor}">&nbsp;</div>-->
     <div class="imgresult-wrapper" v-bind:style="{width: getImgWidth + 'px', height: getImgHeight + 'px'}">
         <img :src="imgsrc" class="imgresult-image" @click="onClick" :class="{ selected: is_selected }"  v-bind:style="{width: imgwidth + 'px', height: imgheight + 'px'}">
     </div>
