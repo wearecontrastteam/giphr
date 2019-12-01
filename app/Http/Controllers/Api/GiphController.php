@@ -69,7 +69,9 @@ class GiphController extends Controller
             'kigfYxdEa5s1ziA2h1', 'tIeCLkB8geYtW', '8xSnw21AM7OQo', 'awXuQy3EFjOLu', 'oBPOP48aQpIxq', 'FdEtkemRg6vo4',
             '10tbKyKsjdrOzC', 'SP11Gcowulfr2', '8SyzTfbhThVNS', 'cbb8zL5wbNnfq', 'cGEWR5jiq9AWc', 'xGDVFwXnboGY',
             '4cxhgC3nosoWk', '3o6Zt8qDiPE2d3kayI', 'l3JDwkm6TeNqTkoMM', 'XreQmk7ETCak0', 'GCvktC0KFy9l6', '9Ai5dIk8xvBm0',
-            '3KVKgMOs8rXnomiVdD', 'FpKKILCKqNIgIE1GZf', 'oyZAfALXOHm6c6DHne', '1dagNhv8Oqu6l8U3ZK', 'b5WsjNpMc35za'
+            '3KVKgMOs8rXnomiVdD', 'FpKKILCKqNIgIE1GZf', 'oyZAfALXOHm6c6DHne', '1dagNhv8Oqu6l8U3ZK', 'b5WsjNpMc35za',
+            // added by Andy
+            '14cilFdQzr8hG0', '5fBH6zoy1szfjORd14s', 'i1jrd0R8wL7pe', 'w2I9CSZRqEhbi', '6WJroWFPN2LyE', '11ISwbgCxEzMyY', 'aLdiZJmmx4OVW'
         ])->random(1)[0];
     }
 
