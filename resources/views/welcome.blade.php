@@ -27,7 +27,7 @@
                     18 tweet reply. No one enjoys typing messages back and forth!
                 </p>
 
-                <h5 class="mt-4">Whats the solution?</h5>
+                <h5 class="mt-4">What's the solution?</h5>
 
                 <p>
                     <img src="https://media.giphy.com/media/RK4ezIEd1IBP2/giphy.gif" alt="A picture is worth a thousand words" style="width: 480px; height: 270px; left: 0px; top: 0px;">
