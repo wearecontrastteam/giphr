@@ -22,7 +22,7 @@ class GiphController extends Controller
         return GiphResource::collection(
             Giph::with(['user', 'likes.user'])
                 ->latest()
-                ->paginate()
+                ->paginate(20)
         );
     }
 
