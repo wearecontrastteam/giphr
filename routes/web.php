@@ -23,7 +23,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
     Route::prefix('/@{user}')->name('profile.')->group(function(){
-        Route::get('/', 'ProfileController@show')->name('show');
+        Route::get('/', 'ProfileController@show')->name('show')->middleware('onboarded');
         Route::get('/edit', 'ProfileController@edit')->name('edit');
         Route::post('/edit', 'ProfileController@update')->name('update');
     });

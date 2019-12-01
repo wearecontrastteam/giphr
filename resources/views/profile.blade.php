@@ -2,9 +2,16 @@
 
 @section('content')
 <div class="container">
+    @if(!$user->avatar_giphy_id)
+        <div class="alert alert-primary" role="alert">
+            You need to choose your avatar!
+        </div>
+    @endif
+
     <div class="row">
         @include('partials.nav')
         <div class="col-md-9">
+
             <form method="POST" action="{{ route('profile.update', $user) }}">
                 @csrf
 {{--                <div class="form-group row">--}}
