@@ -47,7 +47,7 @@
                     <img src="https://media.giphy.com/media/l41YlHs99JsSptZf2/giphy.gif" alt="A picture is worth a thousand words" style="width: 480px; height: 270px; left: 0px; top: 0px;">
                 </p>
 
-                <h5>The Power of Giphy, at your fingertips</h5>
+                <h5>The power of Giphy, at your fingertips</h5>
 
                 <p>
                     Giphr is built on top of the worlds best GIF hosting and search service: Giphy! So if you can't find
