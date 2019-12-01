@@ -19,7 +19,7 @@
                 <h5>We've all been there</h5>
 
                 <p>
-                    <img src="https://media.giphy.com/media/fQZX2aoRC1Tqw/giphy.gif" alt="typing typing typing" style="width: 480px; height: 270px; left: 0px; top: 0px;">
+                    <img class="img-fluid" src="https://media.giphy.com/media/fQZX2aoRC1Tqw/giphy.gif" alt="typing typing typing" style="width: 480px; height: 270px; left: 0px; top: 0px;">
                 </p>
 
                 <p>
@@ -30,7 +30,7 @@
                 <h5 class="mt-4">What's the solution?</h5>
 
                 <p>
-                    <img src="https://media.giphy.com/media/RK4ezIEd1IBP2/giphy.gif" alt="A picture is worth a thousand words" style="width: 480px; height: 270px; left: 0px; top: 0px;">
+                    <img class="img-fluid" src="https://media.giphy.com/media/RK4ezIEd1IBP2/giphy.gif" alt="A picture is worth a thousand words" style="width: 480px; height: 270px; left: 0px; top: 0px;">
                 </p>
 
                 <p>
@@ -44,7 +44,7 @@
                 </p>
 
                 <p>
-                    <img src="https://media.giphy.com/media/l41YlHs99JsSptZf2/giphy.gif" alt="A picture is worth a thousand words" style="width: 480px; height: 270px; left: 0px; top: 0px;">
+                    <img class="img-fluid" src="https://media.giphy.com/media/l41YlHs99JsSptZf2/giphy.gif" alt="A picture is worth a thousand words" style="width: 480px; height: 270px; left: 0px; top: 0px;">
                 </p>
 
                 <h5>The power of Giphy, at your fingertips</h5>
