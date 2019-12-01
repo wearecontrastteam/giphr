@@ -24,7 +24,7 @@
             <div class="card-footer">
                 <div class="row">
                     <div class="col-1 text-center">
-                        <a class="btn btn-outline-secondary" href="#" @click.prevent="like">
+                        <a class="btn" :class="{'btn-primary': alreadyLiked(), 'btn-outline-secondary': !alreadyLiked()}" href="#" @click.prevent="like">
                             {{ getLikeCount }} <i class="fa fa-thumbs-o-up"></i>
                         </a>
                     </div>
@@ -40,7 +40,10 @@
 <script>
     export default {
         name: "giph",
-        props: ['giph'],
+        props: [
+            'giph',
+            'loggedInUserId'
+        ],
         data() {
             return {
                 liking: false,
@@ -70,6 +73,9 @@
             }
         },
         methods: {
+            alreadyLiked() {
+                return this.giph.likes.some(like => like.user.id === this.loggedInUserId);
+            },
             like(){
                 if(this.liking === false) {
                     this.liking = true;
@@ -81,6 +87,9 @@
                 }
             },
             likeTooltipText(like) {
+                if(like.user.id === this.loggedInUserId) {
+                    return 'You like this';
+                }
                 return like.user.name + ' (@' + like.user.handle + ') likes this';
             },
             getGiphyUrl(id){

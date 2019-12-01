@@ -8,7 +8,7 @@
             @if($user_post_count == 0)
             @endif
             <new-giph avatar-giphy-id="{{ auth()->user()->avatar_giphy_id }}" :user-post-count="{{$user_post_count}}"></new-giph>
-            <giph-timeline></giph-timeline>
+            <giph-timeline :logged-in-user-id="{{auth()->user()->id}}"></giph-timeline>
         </div>
     </div>
 </div>
