@@ -62,12 +62,13 @@
             };
         },
         created(){
-            console.log("Logged in user ID: ", this.loggedInUserId);
             this.getLatestGiphs();
             this.$bus.on('new-giph', this.getLatestGiphs);
+            this.$bus.on('giph-deleted', this.getLatestGiphs);
         },
         beforeDestroy() {
             this.$bus.off('new-giph', this.getLatestGiphs);
+            this.$bus.off('giph-deleted', this.getLatestGiphs);
         },
         computed: {
             isLoading(){

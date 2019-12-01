@@ -3,8 +3,12 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-auto">
+                    <div class="col-auto text-center">
                         <img :src="avatarUrl" class="rounded-circle profile">
+                        <span v-if="canDelete" class="mt-4">
+                            <br><br>
+                            <a href="#" class="btn btn-sm btn-outline-danger" @click.prevent="deleteGiph">Delete</a>
+                        </span>
                     </div>
                     <div class="col">
                         <div class="row">
@@ -70,6 +74,9 @@
             },
             getDate(){
                 return window.moment(this.giph.created_at).fromNow();
+            },
+            canDelete(){
+                return this.loggedInUserId === this.giph.user.id && this.giph.giphy_id !== 'cYJgsdeB6VThe';
             }
         },
         methods: {
@@ -100,6 +107,16 @@
             getGiphyUrl(id){
                 return 'https://i.giphy.com/media/'+id+'/giphy.webp';
             },
+            deleteGiph(){
+                if(confirm('Are you sure you want to delete this Giph?')){
+                    axios.delete('/api/giphs/'+this.giph.id)
+                        .then(response => {
+                            if(response.data.deleted === true){
+                                this.$bus.emit('giph-deleted', this.giph);
+                            }
+                        });
+                }
+            }
         }
     }
 </script>

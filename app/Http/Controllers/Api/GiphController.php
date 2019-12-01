@@ -72,4 +72,13 @@ class GiphController extends Controller
             '3KVKgMOs8rXnomiVdD', 'FpKKILCKqNIgIE1GZf', 'oyZAfALXOHm6c6DHne', '1dagNhv8Oqu6l8U3ZK', 'b5WsjNpMc35za'
         ])->random(1)[0];
     }
+
+    public function delete( Giph $giph )
+    {
+        if(auth()->id() === $giph->user_id){
+            $giph->delete();
+        }
+
+        return ['deleted' => true];
+    }
 }
