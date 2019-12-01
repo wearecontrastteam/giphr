@@ -52,15 +52,19 @@ class GiphController extends Controller
         } else {
             $giph->likes()->create([
                 'user_id' => auth()->user()->id,
-                'giphy_id' => $this->getRandomLikeGiphyId()
+                'giphy_id' => $this->getRandomLikeGiphyId($giph)
             ]);
         }
 
         return new GiphResource($giph->fresh()->load('likes.user'));
     }
 
-    private function getRandomLikeGiphyId()
+    private function getRandomLikeGiphyId(Giph $giph)
     {
+        if($giph->giphy_id === 'cYJgsdeB6VThe'){
+            return $giph->giphy_id;
+        }
+
         return collect([
             'kigfYxdEa5s1ziA2h1', 'tIeCLkB8geYtW', '8xSnw21AM7OQo', 'awXuQy3EFjOLu', 'oBPOP48aQpIxq', 'FdEtkemRg6vo4',
             '10tbKyKsjdrOzC', 'SP11Gcowulfr2', '8SyzTfbhThVNS', 'cbb8zL5wbNnfq', 'cGEWR5jiq9AWc', 'xGDVFwXnboGY',
