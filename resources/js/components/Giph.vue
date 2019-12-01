@@ -76,7 +76,7 @@
                 return window.moment(this.giph.created_at).fromNow();
             },
             canDelete(){
-                return this.loggedInUserId === this.giph.user.id && this.giph.giphy_id !== 'cYJgsdeB6VThe';
+                return this.loggedInUserId === this.giph.user.id && !this.isAJayZGiphyId(this.giph.giphy_id);
             }
         },
         methods: {
@@ -95,12 +95,12 @@
             },
             likeTooltipText(like) {
                 if(like.user.id === this.loggedInUserId) {
-                    return like.giphy_id === 'cYJgsdeB6VThe'
+                    return this.isAJayZGiphyId(like.giphy_id)
                         ? 'You & Jay-Z like this'
                         : 'You like this';
                 }
 
-                return like.giphy_id === 'cYJgsdeB6VThe'
+                return this.isAJayZGiphyId(like.giphy_id)
                     ? ('Jay-Z & ' + like.user.name + ' like this')
                     : (like.user.name + ' (@' + like.user.handle + ') likes this');
             },
@@ -116,6 +116,9 @@
                             }
                         });
                 }
+            },
+            isAJayZGiphyId(giphy_id) {
+                return ['cYJgsdeB6VThe','hiLLD9o1wTB3a','zGQHs1NVHgsbm','D2LrM215q3V3W','zCIhx4xzAPn0s'].indexOf(giphy_id) !== -1;
             }
         }
     }

@@ -12,6 +12,14 @@ use Illuminate\Support\Facades\Auth;
 
 class GiphController extends Controller
 {
+    private $jay_zs = [
+        'cYJgsdeB6VThe',
+        'hiLLD9o1wTB3a',
+        'zGQHs1NVHgsbm',
+        'D2LrM215q3V3W',
+        'zCIhx4xzAPn0s',
+    ];
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -61,7 +69,7 @@ class GiphController extends Controller
 
     private function getRandomLikeGiphyId(Giph $giph)
     {
-        if($giph->giphy_id === 'cYJgsdeB6VThe'){
+        if(in_array($giph->giphy_id, $this->jay_zs)){
             return $giph->giphy_id;
         }
 
