@@ -76,7 +76,7 @@
                 return window.moment(this.giph.created_at).fromNow();
             },
             canDelete(){
-                return this.loggedInUserId === this.giph.user.id;
+                return this.loggedInUserId === this.giph.user.id && this.giph.giphy_id !== 'cYJgsdeB6VThe';
             }
         },
         methods: {
