@@ -80,6 +80,11 @@ class User extends Authenticatable
     }
 
     public function identities() {
-        return $this->hasMany('App\SocialIdentity');
+        return $this->hasMany(SocialIdentity::class);
+    }
+
+    public function hasAvatar()
+    {
+        return !empty($this->avatar_giphy_id);
     }
 }
