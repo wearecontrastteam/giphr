@@ -80,6 +80,7 @@ class LoginController extends Controller
                     'email' => $providerUser->getEmail(),
                     //'email' => 'foo@bar.com',
                     'name'  => $providerUser->getName(),
+                    'handle' => $providerUser->getNickname(),
                     'password' => Hash::make(random_bytes(32))
                 ]);
             }

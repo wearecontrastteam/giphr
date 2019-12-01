@@ -8,7 +8,7 @@
             <form method="POST" action="{{ route('updateProfile') }}">
                 @csrf
                 <div class="form-group row">
-                    <label for="avatar_giphy_id" class="col-md-3 col-form-label text-md-right">{{ __('Avatar Giphy ID') }}</label>
+                    <label for="avatar_giphy_id" class="col-md-3 col-form-label text-md-right">{{ __('Your avatar') }}</label>
 
                     <div class="col-md-7">
                         <input id="avatar_giphy_id" type="text" class="form-control @error('name') is-invalid @enderror" name="avatar_giphy_id" value="{{ $user->avatar_giphy_id }}" required>
@@ -20,8 +20,36 @@
                         @enderror
                     </div>
                 </div>
-                <div class="row" style="margin-bottom:1em">
+                <div class="row form-group">
                     <div class="col-md-7 offset-md-3"><img src="https://i.giphy.com/media/{{ $user->avatar_giphy_id ?? 'null' }}/giphy.webp"></div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="avatar_giphy_id" class="col-md-3 col-form-label text-md-right">{{ __('Your handle') }}</label>
+
+                    <div class="col-md-7">
+                        <input disabled id="handle" type="text" class="form-control" name="handle" value="{{ $user->handle }}" required>
+
+                        @error('handle')
+                        <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="avatar_giphy_id" class="col-md-3 col-form-label text-md-right">{{ __('Your name') }}</label>
+
+                    <div class="col-md-7">
+                        <input id="name" type="text" class="form-control" name="name" value="{{ $user->name }}" required>
+
+                        @error('name')
+                        <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
                 </div>
 
                 <div class="form-group row mb-0">
