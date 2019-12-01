@@ -18,7 +18,7 @@
                                 <span class="text-muted"> · {{ getDate }}</span>
                             </div>
                             <div class="col-12 mt-2">
-                                <img :src="giphUrl">
+                                <img class="img-fluid" :src="giphUrl">
                             </div>
                         </div>
                     </div>
