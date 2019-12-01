@@ -11,7 +11,7 @@
                         </div>
                         <div class="col">
                             <div class="input-group">
-                                <input type="text" class="form-control" :placeholder="placeholderText" v-model="search_query">
+                                <input type="text" class="form-control" :placeholder="placeholderText" v-model="search_query" @keyup="process2">
                                 <div v-if="buttonText" class="input-group-append">
                                     <button class="btn btn-outline-primary" @click.prevent="buttonClicked">{{buttonText}}</button>
                                 </div>
@@ -80,6 +80,11 @@
         methods: {
             setSelectedGiph(data){
                 this.giphy_id = data.giphy_id;
+            },
+
+            process2(val) {
+                //console.log(2222);
+                this.doTheSearch();
             },
 
             process(val) {
