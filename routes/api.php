@@ -18,10 +18,7 @@ use Illuminate\Http\Request;
 //});
 
 Route::middleware('auth')->namespace('Api')->group(function (){
-    Route::prefix('users')->name('users.')->group(function() {
-        Route::get('/', 'UserController@index')->name('index');
-        Route::get('/{user}', 'UserController@show')->name('show');
-    });
+    Route::get('/users/@{user}/giphs', 'UserController@giphs')->name('users.giphs');
 
     Route::prefix('giphs')->name('giphs.')->group(function() {
         Route::get('/', 'GiphController@index')->name('index');

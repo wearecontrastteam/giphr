@@ -15,12 +15,13 @@ class User extends JsonResource
      */
     public function toArray($request)
     {
-        //return parent::toArray($request);
         return [
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
             'avatar_giphy_id' => $this->avatar_giphy_id,
+            'profile_url' => $this->profile_url,
+            'handle' => $this->handle,
             'giphs' => GiphResource::collection($this->whenLoaded('giphs'))
         ];
     }

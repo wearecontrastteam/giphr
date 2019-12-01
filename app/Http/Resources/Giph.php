@@ -23,6 +23,7 @@ class Giph extends JsonResource
             'user' => new UserResource($this->whenLoaded('user')),
             'likes' => LikeResource::collection($this->whenLoaded('likes')),
             'likes_count' => $this->likes_count,
+            'created_at' => $this->created_at,
         ];
     }
 }
