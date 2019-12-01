@@ -96,12 +96,12 @@
             likeTooltipText(like) {
                 if(like.user.id === this.loggedInUserId) {
                     return like.giphy_id === 'cYJgsdeB6VThe'
-                        ? 'You & Jay Z like this'
+                        ? 'You & Jay-Z like this'
                         : 'You like this';
                 }
 
                 return like.giphy_id === 'cYJgsdeB6VThe'
-                    ? ('Jay Z & ' + like.user.name + ' like this')
+                    ? ('Jay-Z & ' + like.user.name + ' like this')
                     : (like.user.name + ' (@' + like.user.handle + ') likes this');
             },
             getGiphyUrl(id){
