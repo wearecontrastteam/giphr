@@ -37,9 +37,7 @@
                         </a>
                     </div>
                     <div class="col">
-                        <picture v-for="like in giph.likes" :key="like.id" v-tooltip.top-center="likeTooltipText(like)">
-                            <img :src="getSmallGiphyUrl(like.giphy_id)" alt="Alt Text!" style="height: 50px; margin-bottom: 5px; margin-right: 5px;">
-                        </picture>
+                        <img :src="getSmallGiphyUrl(like.giphy_id)" v-for="like in giph.likes" :key="like.id" v-tooltip.top-center="likeTooltipText(like)" style="height: 50px; margin-bottom: 5px; margin-right: 5px;">
                     </div>
                 </div>
             </div>
