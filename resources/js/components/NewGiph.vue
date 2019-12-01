@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-if="userPostCount === 0 && !postedJayZ" class="alert alert-primary" role="alert">
+        <div v-if="userPostCount === 0 && !posted" class="alert alert-primary" role="alert">
             You've not posted any giphs yet. Click <a href="#" @click="giphJayZ($event)">here</a> to post one...
         </div>
         <giphy-search :avatar-giphy-id="avatarGiphyId" placeholder-text="What's giphening?" button-text="Giph"></giphy-search>
@@ -16,7 +16,7 @@
         ],
         data() {
             return {
-                'postedJayZ': false
+                'posted': false
             }
         },
         created(){
@@ -34,12 +34,12 @@
                         if(response.data.hasOwnProperty('status') && response.data.status === 'ok'){
                             this.$bus.emit('clear-search');
                             this.$bus.emit('new-giph');
+                            this.posted = true;
                         }
                     });
             },
             giphJayZ(event) {
                 event.preventDefault();
-                this.postedJayZ = true;
                 this.createGiph({
                     'giphy_id': 'cYJgsdeB6VThe'
                 })
