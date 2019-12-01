@@ -30,9 +30,12 @@ Route::middleware(['auth'])->group(function(){
 
     Route::middleware(['onboarded'])->group(function(){
         Route::get('/timeline', 'TimelineController@index')->name('timeline');
+
+        Route::get('/stats', 'StatsController@index')->name('stats');
     });
 });
 
 Route::get('/privacy', 'LegalController@privacy')->name('privacy');
 Route::get('/terms', 'LegalController@terms')->name('terms');
+
 
