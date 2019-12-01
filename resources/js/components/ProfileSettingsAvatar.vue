@@ -1,8 +1,13 @@
 <template>
-    <div class="text-center">
-        <img :src="'https://i.giphy.com/media/' + giphy_id + '/giphy.webp'" style="max-width: 100%">
-        <input type="hidden" name="avatar_giphy_id" :value="giphy_id">
+    <div>
+        <div v-if="giphy_id" class="text-center">
+            <img :src="'https://i.giphy.com/media/' + giphy_id + '/giphy.webp'" style="max-width: 100%">
+            <input type="hidden" name="avatar_giphy_id" :value="giphy_id">
+        </div>
+        <giphy-search v-if="giphy_id" placeholder-text="Find a new avatar..."></giphy-search>
+        <giphy-search v-else placeholder-text="Choose your avatar..."></giphy-search>
     </div>
+
 </template>
 
 <script>
@@ -18,7 +23,6 @@
             }
         },
         created(){
-            // axios.get('/api/user').then(response => console.log(response));
             this.$bus.on('select-giph', this.setSelectedGiph);
         },
         beforeDestroy() {

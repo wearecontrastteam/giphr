@@ -26,7 +26,6 @@
 
                     <div class="col-md-7 pull-left">
                         <profile-settings-avatar giphy_id="{{$user->avatar_giphy_id}}"></profile-settings-avatar>
-                        <new-giph avatar-giphy-id=""></new-giph>
                     </div>
                 </div>
 
