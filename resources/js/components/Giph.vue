@@ -18,7 +18,11 @@
                                 <span class="text-muted"> · {{ getDate }}</span>
                             </div>
                             <div class="col-12 mt-2">
-                                <img class="img-fluid" :src="giphUrl">
+
+                                <picture>
+                                    <source :srcset="getWebpGiphyUrl(giph.giphy_id)" type="image/webp">
+                                    <img class="img-fluid" :src="giphUrl">
+                                </picture>
                             </div>
                         </div>
                     </div>
@@ -33,7 +37,9 @@
                         </a>
                     </div>
                     <div class="col">
-                        <img v-for="like in giph.likes" :key="like.id" :src="getGiphyUrl(like.giphy_id)" v-tooltip.top-center="likeTooltipText(like)" style="height: 50px; margin-bottom: 5px; margin-right: 5px;">
+                        <picture v-for="like in giph.likes" :key="like.id" v-tooltip.top-center="likeTooltipText(like)">
+                            <img :src="getSmallGiphyUrl(like.giphy_id)" alt="Alt Text!" style="height: 50px; margin-bottom: 5px; margin-right: 5px;">
+                        </picture>
                     </div>
                 </div>
             </div>
@@ -55,7 +61,7 @@
         },
         computed: {
             avatarUrl(){
-                return this.getGiphyUrl(this.giph.user.avatar_giphy_id);
+                return 'https://media1.giphy.com/media/'+this.giph.user.avatar_giphy_id+'/100w.gif';
             },
             giphUrl(){
                 return this.getGiphyUrl(this.giph.giphy_id);
@@ -105,7 +111,13 @@
                     : (like.user.name + ' (@' + like.user.handle + ') likes this');
             },
             getGiphyUrl(id){
-                return 'https://i.giphy.com/media/'+id+'/giphy.gif';
+                return 'https://i.giphy.com/'+id+'.gif';
+            },
+            getWebpGiphyUrl(id){
+                return 'https://i.giphy.com/media/'+id+'/giphy.webp';
+            },
+            getSmallGiphyUrl(id){
+                return 'https://i.giphy.com/media/'+id+'/100h.gif';
             },
             deleteGiph(){
                 if(confirm('Are you sure you want to delete this Giph?')){
