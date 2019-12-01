@@ -102,6 +102,6 @@ class User extends Authenticatable
 
     public function getAvatarUrl()
     {
-        return 'https://i.giphy.com/media/'.$this->avatar_giphy_id.'/giphy.webp';
+        return 'https://i.giphy.com/media/'.$this->avatar_giphy_id.'/giphy.gih';
     }
 }
