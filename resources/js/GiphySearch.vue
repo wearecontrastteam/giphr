@@ -4,21 +4,7 @@
             <div class="search-box">
                 <input id="search-entry" placeholder="Type search term" v-model="search_query" type="text" />
                 <br/>
-                <label for="count">Count:</label>
-                <select id="count" v-model="count">
-                    <option value="5">5</option>
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
-                </select>
-                <label for="cb_sticker">Stickers?</label><input id="cb_sticker" type="checkbox" v-model="cb_sticker"/>
-                <label v-if="cb_sticker">Sticker BG:
-                    <select id="dd_sticker_bg" v-model="dd_sticker_bg">
-                        <option value="black">Black</option>
-                        <option value="white">White</option>
-                    </select>
-                </label>
+
                 <span class="status" v-if="status">{{status}}</span>
             </div>
             <div class="results">
@@ -47,7 +33,7 @@
                 search_query: '',
                 search_results: [],
                 status: "",
-                count: 25,
+                count: 25, // 25 seems to be the maximum allowed by the API
                 cb_sticker: false,
                 dd_sticker_bg: "white"
             }
@@ -79,8 +65,8 @@
                             for (var entry in res.data.data) {
 
                                 var e = res.data.data[entry];
-                                console.log(e);
-                                console.log(entry);
+                                //console.log(e);
+                                //console.log(entry);
 
                                 this.search_results.push({
                                     width: e.images.fixed_height.width,
