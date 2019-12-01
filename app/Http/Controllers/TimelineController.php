@@ -26,7 +26,10 @@ class TimelineController extends Controller
      */
     public function index()
     {
-        return view('timeline');
+        $user_post_count = Auth::user()->giphs()->count();
+        return view('timeline', [
+            'user_post_count' => $user_post_count
+        ]);
     }
 
 }

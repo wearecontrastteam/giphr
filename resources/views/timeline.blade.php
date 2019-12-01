@@ -5,7 +5,9 @@
     <div class="row">
         @include('partials.nav')
         <div class="col-md-9">
-            <new-giph avatar-giphy-id="{{ auth()->user()->avatar_giphy_id }}"></new-giph>
+            @if($user_post_count == 0)
+            @endif
+            <new-giph avatar-giphy-id="{{ auth()->user()->avatar_giphy_id }}" :user-post-count="{{$user_post_count}}"></new-giph>
             <giph-timeline></giph-timeline>
         </div>
     </div>
