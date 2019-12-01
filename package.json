@@ -24,6 +24,7 @@
     },
     "dependencies": {
         "moment": "^2.24.0",
+        "v-tooltip": "^2.0.2",
         "vue-bus": "^1.2.1"
     }
 }
