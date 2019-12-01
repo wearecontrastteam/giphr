@@ -27,9 +27,9 @@
 
             <div class="card-footer">
                 <div class="row">
-                    <div class="col-1 text-center">
-                        <a class="btn" :class="{'btn-primary': alreadyLiked(), 'btn-outline-secondary': !alreadyLiked()}" href="#" @click.prevent="like">
-                            {{ getLikeCount }} <i class="fa fa-thumbs-o-up"></i>
+                    <div class="col-auto text-center">
+                        <a :class="{'btn': true, 'btn-primary': alreadyLiked(), 'btn-outline-secondary': !alreadyLiked()}" href="#" @click.prevent="like" style="width: 80px;">
+                            <i class="fa fa-thumbs-o-up mr-1"></i> {{ getLikeCount }}
                         </a>
                     </div>
                     <div class="col">
