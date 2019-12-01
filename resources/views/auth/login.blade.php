@@ -9,7 +9,7 @@
                 <div class="card-header">{{ __('Social Login') }}</div>
 
                 <div class="card-body text-center">
-                    <a href="{{ url('/login/twitter') }}" class="btn btn-primary btn-twitter" class="btn btn-twitter"><i class="fa fa-twitter"></i> Login instantly with Twitter</a>
+                    <a href="{{ url('/login/twitter') }}" class="btn btn-primary btn-twitter"><i class="fa fa-twitter"></i> Login with Twitter</a>
                 </div>
             </div>
         </div>
