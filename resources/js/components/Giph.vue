@@ -88,9 +88,14 @@
             },
             likeTooltipText(like) {
                 if(like.user.id === this.loggedInUserId) {
-                    return 'You like this';
+                    return like.giphy_id === 'cYJgsdeB6VThe'
+                        ? 'You & Jay Z like this'
+                        : 'You like this';
                 }
-                return like.user.name + ' (@' + like.user.handle + ') likes this';
+
+                return like.giphy_id === 'cYJgsdeB6VThe'
+                    ? ('Jay Z & ' + like.user.name + ' like this')
+                    : (like.user.name + ' (@' + like.user.handle + ') likes this');
             },
             getGiphyUrl(id){
                 return 'https://i.giphy.com/media/'+id+'/giphy.webp';
