@@ -5,7 +5,7 @@
     <div class="row">
         @include('partials.nav')
         <div class="col-md-9">
-            <form method="POST" action="{{ route('profile.update') }}">
+            <form method="POST" action="{{ route('profile.update', $user) }}">
                 @csrf
                 <div class="form-group row">
                     <label for="avatar_giphy_id" class="col-md-3 col-form-label text-md-right">{{ __('Your avatar') }}</label>

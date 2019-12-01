@@ -19,7 +19,11 @@
 <script>
     export default {
         name: "giph-timeline",
-        props: [],
+        props: {
+            "userHandle": {
+                default: null
+            }
+        },
         data() {
             return {
                 loading: true,
@@ -44,11 +48,16 @@
         methods: {
             getLatestGiphs(){
                 this.loading = true;
-                axios.get('/api/giphs')
+                axios.get(this.getLatestGiphsUrl())
                     .then(response => {
                         this.giphs = response.data.data;
                         this.loading = false;
                     });
+            },
+            getLatestGiphsUrl(){
+                return this.userHandle === null
+                    ? '/api/giphs'
+                    : '/api/users/@'+this.userHandle+'/giphs'
             },
             handleGiphUpdated(giph, updatedGiph){
                 giph.likes_count = updatedGiph.likes_count;

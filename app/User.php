@@ -69,6 +69,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $appends = ['profile_url'];
+
     public function giphs()
     {
         return $this->hasMany(Giph::class);
@@ -83,8 +85,23 @@ class User extends Authenticatable
         return $this->hasMany(SocialIdentity::class);
     }
 
+    public function getRouteKeyName()
+    {
+        return 'handle';
+    }
+
+    public function getProfileUrlAttribute()
+    {
+        return route('profile.show', $this);
+    }
+
     public function hasAvatar()
     {
         return !empty($this->avatar_giphy_id);
+    }
+
+    public function getAvatarUrl()
+    {
+        return 'https://i.giphy.com/media/'.$this->avatar_giphy_id.'/giphy.webp';
     }
 }

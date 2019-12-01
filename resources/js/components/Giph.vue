@@ -4,10 +4,19 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-1">
-                        <img :src="profileUrl" class="rounded-circle profile">
+                        <img :src="avatarUrl" class="rounded-circle profile">
                     </div>
                     <div class="col">
-                        <img :src="giphUrl">
+                        <div class="row">
+                            <div class="col-12">
+                                <a :href="profileUrl" class="text-dark font-weight-bold">{{ name }}</a>
+                                <a :href="profileUrl" class="text-muted">{{ username }}</a>
+                                <span class="text-muted"> · {{ getDate }}</span>
+                            </div>
+                            <div class="col-12 mt-2">
+                                <img :src="giphUrl">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -34,11 +43,11 @@
         props: ['giph'],
         data() {
             return {
-
+                liking: false,
             };
         },
         computed: {
-            profileUrl(){
+            avatarUrl(){
                 return this.getGiphyUrl(this.giph.user.avatar_giphy_id);
             },
             giphUrl(){
@@ -47,13 +56,29 @@
             getLikeCount(){
                 return this.giph.likes_count || 0;
             },
+            profileUrl(){
+                return this.giph.user.profile_url;
+            },
+            name(){
+                return this.giph.user.name;
+            },
+            username(){
+                return '@'+this.giph.user.handle;
+            },
+            getDate(){
+                return window.moment(this.giph.created_at).fromNow();
+            }
         },
         methods: {
             like(){
-                axios.post('/api/giphs/'+this.giph.id+'/likes')
-                    .then(response => {
-                        this.$emit('giphupdated', response.data.data);
-                    });
+                if(this.liking === false) {
+                    this.liking = true;
+                    axios.post('/api/giphs/' + this.giph.id + '/likes')
+                        .then(response => {
+                            this.$emit('giphupdated', response.data.data);
+                            this.liking = false;
+                        });
+                }
             },
             getGiphyUrl(id){
                 return 'https://i.giphy.com/media/'+id+'/giphy.webp';

@@ -16,7 +16,7 @@ class Onboarded
     public function handle($request, Closure $next)
     {
         if($request->user()->hasAvatar() === false){
-            return redirect()->route('profile.index');
+            return redirect()->route('profile.edit', $request->user());
         }
 
         return $next($request);

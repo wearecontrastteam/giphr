@@ -22,8 +22,11 @@ Route::get('auth/{provider}/callback','Auth\LoginController@handleProviderCallba
 Route::middleware(['auth'])->group(function(){
     Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
-    Route::get('/profile', 'ProfileController@index')->name('profile.index');
-    Route::post('/profile', 'ProfileController@update')->name('profile.update');
+    Route::prefix('/@{user}')->name('profile.')->group(function(){
+        Route::get('/', 'ProfileController@show')->name('show');
+        Route::get('/edit', 'ProfileController@edit')->name('edit');
+        Route::post('/edit', 'ProfileController@update')->name('update');
+    });
 
     Route::middleware(['onboarded'])->group(function(){
         Route::get('/timeline', 'TimelineController@index')->name('timeline');

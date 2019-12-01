@@ -2,26 +2,21 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Giph;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Giph as GiphResource;
 use App\Http\Resources\User as UserResource;
 use App\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function __construct()
+    public function giphs( User $user )
     {
-        $this->middleware('auth');
-    }
-
-    public function index()
-    {
-        return UserResource::collection(User::paginate());
-    }
-
-    public function show(User $user)
-    {
-        $user->load('giphs');
-        return new UserResource($user);
+        return GiphResource::collection(
+            Giph::whereUserId($user->id)
+                ->with(['user', 'likes.user'])
+                ->paginate()
+        );
     }
 }

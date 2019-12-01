@@ -5,7 +5,7 @@
         </li>
         @auth
             <li class="nav-item">
-                <a class="nav-link" href="{{route('profile.index')}}">My Profile</a>
+                <a class="nav-link" href="{{route('profile.show', auth()->user())}}">My Profile</a>
             </li>
         @elseguest
             <li class="nav-item">
