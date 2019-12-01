@@ -19,6 +19,7 @@ class ProfileController extends Controller
         $user = Auth::user();
 
         $user->avatar_giphy_id = $request->get('avatar_giphy_id');
+        $user->name = $request->get('name');
         $user->save();
 
         return redirect()->route('profile.index');
